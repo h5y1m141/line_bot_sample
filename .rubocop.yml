@@ -1,0 +1,56 @@
+AllCops:
+  TargetRubyVersion: 2.5
+  Exclude:
+    - "bin/*"
+    - "db/schema.rb"
+    - "db/migrate/*acts_as_taggable_on_engine.rb"
+    - "node_modules/**/*"
+    - "vendor/**/*"
+    - "engines/line_bespo/spec/dummy/bin/*"
+    - "engines/line_bespo/spec/dummy/db/schema.rb"
+
+Rails:
+  Enabled: true
+
+Rails/OutputSafety:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/AbcSize:
+  Max: 20
+  Exclude:
+    - "db/migrate/**/*"
+
+Metrics/BlockLength:
+  Exclude:
+    - "config/**/*"
+    - "db/migrate/**/*"
+    - "lib/capistrano/tasks/*.rake"
+    - "spec/**/*"
+
+Metrics/ClassLength:
+  Max: 200
+  Exclude:
+    - "db/migrate/**/*"
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 15
+  Exclude:
+    - "db/migrate/**/*"
+
+Metrics/ParameterLists:
+  Max: 15
