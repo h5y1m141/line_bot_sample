@@ -11,6 +11,10 @@ gem 'rails', '5.2.3'
 gem 'rack-cors'
 gem 'dotenv-rails'
 
+# LINE Bot処理のために以下追加
+gem 'statesman', '~> 3.4.1'
+gem 'line-bot-api'
+
 group :development do
   gem 'bootsnap', require: false
   gem 'listen'
