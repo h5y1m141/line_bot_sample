@@ -1,0 +1,2 @@
+module Line::MessagesHelper
+end
