@@ -6,13 +6,24 @@ module Line
 
     def create
       line_client
-      event = params['message']['events'].first
-      message = {
-        type: 'text',
-        text: 'こんにちは'
-      }
-      @client.reply_message(event['replyToken'], message)
-      render status: 200, json: { status: 200, message: 'Success' }
+      body = request.body.read
+      events = @client.parse_events_from(body)
+      line_user_id = events.first['source']['userId']
+
+      profile = LineBotApi::GetProfile.new.execute(line_user_id: line_user_id)
+      display_name = profile['displayName']
+      events.each do |event|
+        case event.type
+        when Line::Bot::Event::MessageType::Text
+          message = {
+            type: 'text',
+            text: "#{display_name}さん、こんにちは!!"
+          }
+          @client.reply_message(event['replyToken'], message)
+        end
+      end
+
+      render status: :ok
     end
 
     private
