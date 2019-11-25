@@ -10,14 +10,20 @@ module Line
       events = @client.parse_events_from(body)
       line_user_id = events.first['source']['userId']
 
-      profile = LineBotApi::GetProfile.new.execute(line_user_id: line_user_id)
-      display_name = profile['displayName']
+      profile = LineProfileRepository.find_by(line_user_id: line_user_id)
+      line_display_name = profile['displayName']
+
+      LineProfileRepository.create!(
+        line_user_id: line_user_id,
+        line_display_name: line_display_name
+      )
+
       events.each do |event|
         case event.type
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
-            text: "#{display_name}さん、こんにちは!!"
+            text: "#{line_display_name}さん、こんにちは!!id: #{line_user_id}"
           }
           @client.reply_message(event['replyToken'], message)
         end
