@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_25_082825) do
+ActiveRecord::Schema.define(version: 2019_11_26_072343) do
 
   create_table "line_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "line_user_id", null: false
@@ -20,4 +20,24 @@ ActiveRecord::Schema.define(version: 2019_11_25_082825) do
     t.index ["line_user_id"], name: "index_line_users_on_line_user_id", unique: true
   end
 
+  create_table "order_transitions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "to_state", null: false
+    t.text "metadata"
+    t.integer "sort_key", null: false
+    t.bigint "order_id"
+    t.boolean "most_recent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id", "most_recent"], name: "index_order_transitions_parent_most_recent", unique: true
+    t.index ["order_id", "sort_key"], name: "index_order_transitions_parent_sort", unique: true
+    t.index ["order_id"], name: "index_order_transitions_on_order_id"
+  end
+
+  create_table "orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "order_transitions", "orders"
 end
