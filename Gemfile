@@ -12,7 +12,7 @@ gem 'rack-cors'
 gem 'dotenv-rails'
 
 # LINE Bot処理のために以下追加
-gem 'statesman', '~> 3.4.1'
+gem 'statesman', '~> 5.0.0'
 gem 'line-bot-api'
 
 group :development do
