@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_26_072343) do
+ActiveRecord::Schema.define(version: 2019_12_03_232249) do
+
+  create_table "line_user_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "message_sequence_id", comment: "一連の問い合わせを特定するために利用するID"
+    t.string "reply_token", null: false
+    t.bigint "line_user_id"
+    t.integer "status", null: false
+    t.text "message", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["line_user_id"], name: "index_line_user_messages_on_line_user_id"
+    t.index ["message_sequence_id"], name: "index_line_user_messages_on_message_sequence_id"
+    t.index ["reply_token"], name: "index_line_user_messages_on_reply_token"
+  end
 
   create_table "line_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "line_user_id", null: false
@@ -39,5 +52,6 @@ ActiveRecord::Schema.define(version: 2019_11_26_072343) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "line_user_messages", "line_users"
   add_foreign_key "order_transitions", "orders"
 end
