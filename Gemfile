@@ -8,7 +8,7 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem 'mysql2'
 gem 'rails', '5.2.3'
-gem 'rack-cors'
+gem "rack-cors", ">= 1.0.4"
 gem 'dotenv-rails'
 
 # LINE Bot処理のために以下追加
