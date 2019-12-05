@@ -8,7 +8,7 @@ module Line
       line_client
       body = request.body.read
       events = @client.parse_events_from(body)
-      LineEventUsecase.new(events, @client).execute
+      LineEventUsecase.new(events).execute
 
       render status: :ok
     end
