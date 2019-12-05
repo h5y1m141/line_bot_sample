@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_03_232249) do
+ActiveRecord::Schema.define(version: 2019_12_04_071158) do
+
+  create_table "line_user_message_transitions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "to_state", null: false
+    t.text "metadata"
+    t.integer "sort_key", null: false
+    t.bigint "line_user_message_id"
+    t.boolean "most_recent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["line_user_message_id", "most_recent"], name: "index_line_user_message_transitions_parent_most_recent", unique: true
+    t.index ["line_user_message_id", "sort_key"], name: "index_line_user_message_transitions_parent_sort", unique: true
+    t.index ["line_user_message_id"], name: "index_line_user_message_transitions_on_line_user_message_id"
+  end
 
   create_table "line_user_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "message_sequence_id", comment: "一連の問い合わせを特定するために利用するID"
@@ -52,6 +65,7 @@ ActiveRecord::Schema.define(version: 2019_12_03_232249) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "line_user_message_transitions", "line_user_messages"
   add_foreign_key "line_user_messages", "line_users"
   add_foreign_key "order_transitions", "orders"
 end
